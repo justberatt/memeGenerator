@@ -1,4 +1,22 @@
+import { useState } from 'react'
+
 export default function Main() {
+    const [meme, setMeme] = useState({
+        topText: "One does not simply",
+        bottomText: "Walk into Mordor",
+        imageUrl: "http://i.imgflip.com/1bij.jpg"
+    })
+
+    const handleChange = (e) => {
+        const {value, name} = e.currentTarget // It is the same as writing 'const value = e.currentTarget.value'
+        setMeme(prevMeme => {
+            return {
+                ...prevMeme,
+                [name]: value
+            }
+        })
+    }
+
     return (
         <main>
             <div className="form">
@@ -7,6 +25,8 @@ export default function Main() {
                         type="text"
                         placeholder="One does not simply"
                         name="topText"
+                        onChange={handleChange}
+                        value={meme.topText}
                     />
                 </label>
 
@@ -15,14 +35,16 @@ export default function Main() {
                         type="text"
                         placeholder="Walk into Mordor"
                         name="bottomText"
+                        onChange={handleChange}
+                        value={meme.bottomText}
                     />
                 </label>
                 <button>Get a new meme image 🖼</button>
             </div>
             <div className="meme">
-                <img src="http://i.imgflip.com/1bij.jpg" />
-                <span className="top">One does not simply</span>
-                <span className="bottom">Walk into Mordor</span>
+                <img src= {meme.imageUrl} />
+                <span className="top">{meme.topText}</span>
+                <span className="bottom">{meme.bottomText}</span>
             </div>
         </main>
     )
